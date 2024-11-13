@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索引擎</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="#" class="active">网页</a>
+            <a href="#">图片</a>
+            <a href="#">视频</a>
+        </div>
+        <div class="nav-right">
+            <button id="themeToggle">🌙</button>
+            <a href="#" class="login-btn">登录</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <div class="search-3d">
+                    <div class="circle"></div>
+                    <div class="handle"></div>
+                    <div class="light-effect"></div>
+                </div>
+            </div>
+            <h1>TechSearch</h1>
+        </div>
+        <div class="search-box">
+            <div class="search-engine-selector">
+                <div class="current-engine" id="currentEngine">
+                    <img src="https://www.baidu.com/favicon.ico" alt="百度" />
+                    <span>百度</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="engine-options" id="engineOptions">
+                    <div class="engine-category">常用搜索</div>
+                    <div class="engine-option" data-engine="baidu" data-url="https://www.baidu.com/s?wd=">
+                        <img src="https://www.baidu.com/favicon.ico" alt="百度" />
+                        <span>百度</span>
+                    </div>
+                    <div class="engine-option" data-engine="google" data-url="https://www.google.com/search?q=">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" />
+                        <span>Google</span>
+                    </div>
+                    <div class="engine-option" data-engine="bing" data-url="https://www.bing.com/search?q=">
+                        <img src="https://www.bing.com/favicon.ico" alt="必应" />
+                        <span>必应</span>
+                    </div>
+                    
+                    <div class="engine-category">开发搜索</div>
+                    <div class="engine-option" data-engine="github" data-url="https://github.com/search?q=">
+                        <img src="https://github.com/favicon.ico" alt="GitHub" />
+                        <span>GitHub</span>
+                    </div>
+                    <div class="engine-option" data-engine="stackoverflow" data-url="https://stackoverflow.com/search?q=">
+                        <img src="https://stackoverflow.com/favicon.ico" alt="Stack Overflow" />
+                        <span>Stack Overflow</span>
+                    </div>
+                    
+                    <div class="engine-category">学术搜索</div>
+                    <div class="engine-option" data-engine="scholar" data-url="https://scholar.google.com/scholar?q=">
+                        <img src="https://scholar.google.com/favicon.ico" alt="谷歌学术" />
+                        <span>谷歌学术</span>
+                    </div>
+                    <div class="engine-option" data-engine="cnki" data-url="https://kns.cnki.net/kns8/defaultresult/index?q=">
+                        <img src="https://www.cnki.net/favicon.ico" alt="知网" />
+                        <span>中国知网</span>
+                    </div>
+                </div>
+            </div>
+            <input type="text" placeholder="请输入搜索内容" id="searchInput" autocomplete="off">
+            <button class="voice-search" id="voiceSearch">🎤</button>
+            <button class="search-btn" onclick="performSearch()">搜索一下</button>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        <div class="hot-searches" id="hotSearches">
+            <h3>热门搜索</h3>
+            <div class="hot-list"></div>
+        </div>
+        <div class="features-section">
+            <div class="feature-grid">
+                <div class="feature-card" onclick="window.location.href='#'">
+                    <span class="feature-icon">📰</span>
+                    <h3>今日新闻</h3>
+                    <p>实时热点资讯</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='#'">
+                    <span class="feature-icon">🎮</span>
+                    <h3>游戏中心</h3>
+                    <p>休闲小游戏</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='#'">
+                    <span class="feature-icon">🎬</span>
+                    <h3>视频推荐</h3>
+                    <p>精选视频内容</p>
+                </div>
+                <div class="feature-card" onclick="window.location.href='#'">
+                    <span class="feature-icon">🛒</span>
+                    <h3>购物导航</h3>
+                    <p>比价购物推荐</p>
+                </div>
+            </div>
+        </div>
+        <div class="weather-widget">
+            <div class="weather-info">
+                <span class="weather-icon">🌤️</span>
+                <span class="temperature">正在获取天气...</span>
+            </div>
+        </div>
+        <div class="quick-tools">
+            <div class="tool-item" onclick="showCalculator()">
+                <span>🧮</span>
+                <p>计算器</p>
+            </div>
+            <div class="tool-item" onclick="showTranslator()">
+                <span>🌍</span>
+                <p>翻译</p>
+            </div>
+            <div class="tool-item" onclick="showNotes()">
+                <span>📝</span>
+                <p>便签</p>
+            </div>
+        </div>
+        <div class="links">
+            <a href="#">新闻</a>
+            <a href="#">地图</a>
+            <a href="#">视频</a>
+            <a href="#">图片</a>
+            <a href="#">更多</a>
+        </div>
+        <div class="history-control">
+            <button id="clearHistory" style="display: none;">清除搜索历史</button>
+        </div>
+        <div class="chat-widget" id="chatWidget">
+            <div class="chat-header">
+                <span class="chat-title">AI 助手</span>
+                <div class="chat-controls">
+                    <button class="minimize-btn" onclick="toggleChat()">_</button>
+                    <button class="close-btn" onclick="closeChat()">×</button>
+                </div>
+            </div>
+            <div class="chat-body">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="avatar">🤖</div>
+                        <div class="text">你好！我是 AI 助手，有什么可以帮你的吗？</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <textarea id="userInput" placeholder="输入消息..." rows="1" onkeydown="handleKeyPress(event)"></textarea>
+                    <button onclick="sendMessage()">发送</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-float-btn" onclick="openChat()">
+            <span class="chat-icon">💬</span>
+            <span class="chat-label">AI 助手</span>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>© 2024 搜索引擎 - 仅供学习使用</p>
+        <div class="footer-links">
+            <a href="#">关于我们</a>
+            <a href="#">使用条款</a>
+            <a href="#">隐私政策</a>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html> 
